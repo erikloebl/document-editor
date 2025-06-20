@@ -90,8 +90,14 @@ export default function FieldManager({
 
       const { analysis } = await response.json()
 
+      const updateAnalysis = analysis
+      .trim()
+      .replace(/^```(?:json)?\n?/, "")
+      .replace(/```$/, "")
+      .trim()
+
       try {
-        const parsedResponse = JSON.parse(analysis)
+        const parsedResponse = JSON.parse(updateAnalysis)
         if (parsedResponse.fields && Array.isArray(parsedResponse.fields)) {
           onFieldsIdentified(parsedResponse.fields)
           toast({
